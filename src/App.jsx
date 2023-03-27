@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Configuration, OpenAIApi } from "openai";
 import WittyWishesLogo from "./assets/WittyWishes.png";
 import { BiCopy } from "react-icons/Bi";
+import { HiSparkles } from "react-icons/hi";
 
 //open ai config
 const configuration = new Configuration({
@@ -42,6 +43,8 @@ const App = () => {
     }
   };
 
+  const isDisabled = personName.trim() === "" || relation.trim() === "";
+
   return (
     <div className="flex flex-col items-center justify-center px-4 sm:p-0">
       <img
@@ -71,26 +74,27 @@ const App = () => {
         </div>
         <div className="flex justify-center items-center py-2">
           <button
-            className="flex items-center  bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-sm border-4 text-white py-1 px-2 rounded"
+            className="flex items-center  bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-sm border-4 text-white py-1 px-2 rounded "
             type="submit"
+            disabled={isDisabled}
           >
-            Generate
+            Generate <HiSparkles className="ml-1" />
           </button>
         </div>
       </form>
 
       {response && (
         <div className="w-full max-w-lg mt-4">
-        <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 relative">
-          <p className="text-gray-700 text-base">{response}</p>
-          <button
-            onClick={() => navigator.clipboard.writeText(response)}
-            className="absolute buttom-0 right-0  rounded-full h-8 w-8 flex items-center justify-center hover:bg-gray-300"
-          >
-            <BiCopy/>
-          </button>
+          <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 relative">
+            <p className="text-gray-700 text-base">{response}</p>
+            <button
+              onClick={() => navigator.clipboard.writeText(response)}
+              className="absolute buttom-0 right-0  rounded-full h-8 w-8 flex items-center justify-center hover:bg-gray-300"
+            >
+              <BiCopy />
+            </button>
+          </div>
         </div>
-      </div>
       )}
     </div>
   );
