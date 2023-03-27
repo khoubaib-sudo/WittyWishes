@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { Configuration, OpenAIApi } from "openai";
 import WittyWishesLogo from "./assets/WittyWishes.png";
-import { BiCopy } from "react-icons/Bi";
+import { BiCopy } from "react-icons/bi";
 import { HiSparkles } from "react-icons/hi";
 
-//open ai config
 const configuration = new Configuration({
   apiKey: import.meta.env.VITE_OPENAI_API_KEY,
 });
