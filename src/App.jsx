@@ -13,6 +13,7 @@ const App = () => {
   const [personName, setPersonName] = useState("");
   const [relation, setRelation] = useState("");
   const [response, setResponse] = useState("");
+  const [isGenerating, setIsGenerating] = useState(false);
 
   const handlePersonNameChange = (event) => {
     setPersonName(event.target.value);
@@ -24,7 +25,7 @@ const App = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+    setIsGenerating(true);
     try {
       const completions = await apiClient.createCompletion({
         model: "text-davinci-003",
@@ -39,6 +40,8 @@ const App = () => {
       setResponse(completions.data.choices[0].text);
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsGenerating(false);
     }
   };
 
@@ -73,11 +76,16 @@ const App = () => {
         </div>
         <div className="flex justify-center items-center py-2">
           <button
-            className="flex items-center  bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-sm border-4 text-white py-1 px-2 rounded "
+            className="flex items-center bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-sm border-4 text-white py-1 px-2 rounded"
             type="submit"
             disabled={isDisabled}
           >
-            Generate <HiSparkles className="ml-1" />
+            {response ? "Regenerate" : "Generate"}
+            {response ? (
+              <HiSparkles className="ml-1 animate-bounce" />
+            ) : (
+              <HiSparkles className="ml-1" />
+            )}
           </button>
         </div>
       </form>
